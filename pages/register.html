@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Register</title>
+
+  <link
+    href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css"
+    rel="stylesheet"
+  />
+
+  <style>
+    body, html {
+      height: 100%;
+      margin: 0;
+      font-family: 'Segoe UI', sans-serif;
+    }
+
+    .register-container {
+      display: flex;
+      min-height: 100vh;
+    }
+
+    .left-panel {
+      flex: 1;
+      background-color: rgb(255, 85, 0);
+      color: white;
+      padding: 40px;
+      text-align: center;
+    }
+
+    .right-panel {
+      flex: 1;
+      background: url('https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS9zrNB1dnNIHN6YlK3fZCOOBPnAc_dqaprWA&s')
+        center center / cover no-repeat;
+    }
+
+    input {
+      width: 100%;
+      padding: 10px;
+      margin: 10px 0;
+      border: none;
+      border-radius: 10px;
+    }
+
+    .btn-register {
+      background-color: #39658e;
+      color: white;
+      width: 100%;
+      padding: 12px;
+      margin-top: 15px;
+      border-radius: 10px;
+      font-size: 18px;
+      border: none;
+    }
+
+    label {
+      float: left;
+      font-size: 14px;
+      margin-top: 10px;
+    }
+
+    .form-check {
+      font-size: 13px;
+      text-align: left;
+      margin-top: 10px;
+    }
+
+    .helper {
+      color: #fff;
+      font-size: 12px;
+      text-align: left;
+      display: none;
+    }
+
+    .helper.show {
+      display: block;
+    }
+
+    .register-link {
+      color: #fff;
+      display: inline-block;
+      margin-top: 10px;
+    }
+  </style>
+</head>
+
+<body>
+
+<div class="register-container">
+  <div class="left-panel">
+    <h6>The Unique Shop</h6>
+    <h3 class="mb-4">Create an account</h3>
+
+    <form id="registerForm" novalidate>
+      <label for="username">Username</label>
+      <input type="text" id="username" required />
+      <div id="usernameHelper" class="helper">Username must be at least 6 characters.</div>
+
+      <label for="email">Email</label>
+      <input type="email" id="email" required />
+      <div id="emailHelper" class="helper">Invalid email format.</div>
+
+      <label for="password">Password</label>
+      <input type="password" id="password" required />
+      <div id="passwordHelper" class="helper">
+        Password must be 8+ chars, upper, lower, number, special.
+      </div>
+
+      <label for="confirmPassword">Confirm Password</label>
+      <input type="password" id="confirmPassword" required />
+      <div id="confirmHelper" class="helper">Passwords do not match.</div>
+
+      <div class="form-check">
+        <input type="checkbox" id="privacyCheck" class="form-check-input" />
+        <label class="form-check-label" for="privacyCheck">
+          I agree to the privacy policy
+        </label>
+      </div>
+
+      <button class="btn-register" type="submit">Sign Up</button>
+      <a href="login.html" class="register-link">Already have an account?</a>
+    </form>
+  </div>
+
+  <div class="right-panel"></div>
+</div>
+
+<!-- ONLY THIS SCRIPT -->
+<script type="module" src="../js/login_register.js"></script>
+
+
+
+</body>
+</html>

@@ -11,6 +11,13 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
   
     <style>
+      .cart-img {
+  width: 60px;
+  height: 60px;
+  object-fit: cover;
+  border-radius: 6px;
+}
+
       .text1 {
         background-color: rgb(255, 85, 0);
         color: white;
@@ -32,6 +39,97 @@
       }
     </style>
   </head>
+  
+    
+<!-- 🛒 CART MODAL -->
+<div class="modal fade" id="cartModal" tabindex="-1">
+  <div class="modal-dialog modal-lg modal-dialog-centered">
+    <div class="modal-content">
+
+      <div class="modal-header" style="background:#ff5500;color:white;">
+        <h5 class="modal-title">🛒 Your Cart</h5>
+        <button class="btn-close" data-bs-dismiss="modal"></button>
+      </div>
+
+      <div class="modal-body">
+        <table class="table align-middle">
+         <thead>
+  <tr>
+    <th>Image</th>
+    <th>Product</th>
+    <th>Price</th>
+    <th>Qty</th>
+    <th>Subtotal</th>
+    <th></th>
+  </tr>
+</thead>
+
+          <tbody id="cartItems"></tbody>
+        </table>
+
+        <h5 class="text-end">
+          Total: <span id="cartTotal">$0</span>
+        </h5>
+      </div>
+
+      <div class="modal-footer justify-content-between">
+        <button class="btn btn-outline-danger" data-bs-dismiss="modal">
+          Close
+        </button>
+        <button class="btn" id="buyBtn"
+          style="background:#ff5500;color:white;">
+          Buy Now
+        </button>
+      </div>
+
+    </div>
+  </div>
+</div>
+<!-- 🔍 PRODUCT DETAIL MODAL -->
+<div class="modal fade" id="productDetailModal" tabindex="-1">
+  <div class="modal-dialog modal-lg modal-dialog-centered">
+    <div class="modal-content" style="font-family:'Courier New', cursive;">
+
+      <div class="modal-header" style="background:#ff5500;color:white;">
+        <h5 class="modal-title" id="modalProductTitle"></h5>
+        <button class="btn-close" data-bs-dismiss="modal"></button>
+      </div>
+
+      <div class="modal-body d-flex gap-4">
+        <img id="modalProductImage"
+             style="max-width:220px;object-fit:cover;" />
+
+        <div>
+          <p><strong>Seller:</strong> <span id="modalProductSeller"></span></p>
+          <p><strong>Description:</strong> <span id="modalProductDesc"></span></p>
+          <p><strong>Rating:</strong> ⭐ <span id="modalProductRating"></span></p>
+          <p><strong>Price:</strong> $<span id="modalProductPrice"></span></p>
+        </div>
+      </div>
+
+      <div class="modal-footer justify-content-center gap-2">
+
+  <!-- Add to cart -->
+  <button id="modalAddToCart"
+    class="btn"
+    style="background:#ff5500;color:white;">
+    Add to Cart
+  </button>
+
+  <!--  ADMIN ONLY: DELETE PRODUCT -->
+  <button id="modalDeleteProduct"
+    class="btn btn-danger"
+    style="display:none;">
+    Delete Product
+  </button>
+
+</div>
+
+
+    </div>
+  </div>
+</div>
+
   <body>
     <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
       <div class="container-fluid">
@@ -53,21 +151,24 @@
               <a class="nav-link" href="categories.html">Categories</a>
             </li>
             
-            <li class="nav-item"><a class="nav-link" href="#">Gifts</a></li>
+            <li class="nav-item" id="adminPage" style="display:none;">
+  <a class="nav-link" href="upload.html">Admin</a>
+</li>
             <li class="nav-item">
               <a class="nav-link" href="vouchers.html">Holiday Deals</a>
             </li>
             <li class="nav-item"><a class="nav-link" href="#">Fashion</a></li>
           </ul>
-          <form class="d-flex" id="searchForm">
-            <input
-              class="form-control me-2"
-              id="searchInput"
-              type="search"
-              placeholder="Search for anything"
-            />
-            <button class="btn btn-outline-light" type="submit">Search</button>
-          </form>
+          <form id="searchForm" class="d-flex ms-3" role="search">
+  <input
+    id="searchInput"
+    class="form-control me-2"
+    type="search"
+    placeholder="Search products..."
+    aria-label="Search"
+  />
+  <button class="btn btn-outline-success" type="submit">Search</button>
+</form>
           <a class="btn btn-warning ms-2" href="login.html">Sign In</a>
           
           <div id="userSection" class="ms-2"></div>
@@ -212,6 +313,9 @@
         </div>
       </div>
     </div>
+    <p id="noResultsMessage" style="display:none; text-align:center;">
+  No products found 😢
+</p>
 
     <!-- T shirt Modal -->
     <div class="modal fade" id="modal2" tabindex="-1">
@@ -418,24 +522,32 @@
           new bootstrap.Modal(document.getElementById("modal5")).show();
         });
 
-      // Search function
-      const searchForm = document.getElementById("searchForm");
-      const searchInput = document.getElementById("searchInput");
-      const products = document.querySelectorAll(".product-item");
+      // // Search function
+      // const searchForm = document.getElementById("searchForm");
+      // const searchInput = document.getElementById("searchInput");
+      // const products = document.querySelectorAll(".product-item");
 
-      function filterProducts() {
-        const query = searchInput.value.toLowerCase();
-        products.forEach((item) => {
-          const title = item.querySelector(".card-title").textContent.toLowerCase();
-          if (title.includes(query)) {
-            item.style.display = "block";
-          } else {
-            item.style.display = "none";
-          }
-        });
-      }
+      // function filterProducts() {
+      //   const query = searchInput.value.toLowerCase();
+      //   products.forEach((item) => {
+      //     const title = item.querySelector(".card-title").textContent.toLowerCase();
+      //     if (title.includes(query)) {
+      //       item.style.display = "block";
+      //     } else {
+      //       item.style.display = "none";
+      //     }
+      //   });
+      // }
 
       // Filter when typing
+      function filterProducts() {
+  const query = searchInput.value.toLowerCase();
+  document.querySelectorAll(".product-item").forEach(item => {
+    const title = item.querySelector(".card-title")?.textContent.toLowerCase() || "";
+    item.style.display = title.includes(query) ? "block" : "none";
+  });
+}
+
       searchInput.addEventListener("keyup", filterProducts);
 
       // Prevent form refresh and filter when pressing search button
@@ -461,14 +573,13 @@
     }
   });
 </script>
-    </script>
     <div id="ourProducts" class="container my-4">
   <h2 class="text-center mb-4">🛍️ Our Products</h2>
   <div id="product-list" class="row g-4"></div>
 </div>
 
 <!-- Link your JS file -->
-<script src="main.js"></script>
+
 
     <footer class="footer">
       <div class="container">
@@ -500,8 +611,9 @@
         </div>
       </div>
     </footer>
-    <script src="main.js"></script>
-    <script src="app.js"></script>
     
   </body>
 </html>
+<script type="module" src="../js/main.js"></script>
+<script type="module" src="../js/admin.js"></script>
+<script type="module" src="../config/config.js"></script>
