@@ -168,9 +168,9 @@ onAuthStateChanged(auth, user => {
 const db = getFirestore(app);
 let allProducts = [];
 
-async function loadUploadedProducts() {
-  const snap = await getDocs(collection(db, "products"));
-  return snap.docs.map(d => ({
+async function loadUploadedProducts() { ///check again
+  const snap = await getDocs(collection(db, "products"));/// check again
+  return snap.docs.map(d => ({     ///check again 
     id: "fs_" + d.id,
     fsId: d.id,
     title: d.data().name,

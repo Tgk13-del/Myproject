@@ -1,0 +1,106 @@
+/* ===============================
+   PRODUCT GRID LAYOUT FIX
+================================ */
+
+/* make every card same height */
+#productGrid .product-item {
+  display: flex;
+}
+
+.product-item .card {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  width: 100%;
+}
+
+
+/* ===============================
+   CARD DESIGN (white + orange theme)
+================================ */
+
+.product-item .card {
+  border-radius: 14px;
+  background: #ffffff;
+  border: 1px solid #eee;
+  overflow: hidden;
+
+  transition: all 0.25s ease;
+}
+
+.product-item .card:hover {
+  transform: translateY(-6px);
+  box-shadow: 0 12px 28px rgba(255, 85, 0, 0.25);
+}
+
+
+/* ===============================
+   IMAGE (equal size for all)
+================================ */
+
+.card-img-top {
+  height: 220px;
+  width: 100%;
+  object-fit: contain;  /* keeps full product visible */
+  background: #ffffff;
+  padding: 15px;
+}
+
+
+/* ===============================
+   BODY LAYOUT (important)
+================================ */
+
+.card-body {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  padding: 14px;
+}
+
+
+/* ===============================
+   TITLE (same height)
+================================ */
+
+.card-body h6 {
+  font-size: 14px;
+  font-weight: 600;
+  min-height: 44px; /* makes all titles equal */
+  margin-bottom: 6px;
+}
+
+
+/* ===============================
+   RATING STYLE
+================================ */
+
+.card-body small {
+  color: #ff5500;
+  font-weight: 600;
+  margin-bottom: 10px;
+}
+
+
+/* ===============================
+   SEE MORE BUTTON (equal + theme)
+================================ */
+
+.see-more-btn {
+  margin-top: auto;      /* pushes button to bottom */
+  width: 100%;           /* same width */
+  padding: 8px;
+
+  background: #ff5500;
+  color: white;
+  border: none;
+  border-radius: 8px;
+
+  font-weight: 600;
+  transition: 0.2s;
+}
+
+.see-more-btn:hover {
+  background: #ff6f1f;
+  transform: scale(1.03);
+}
